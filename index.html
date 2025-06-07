@@ -19,8 +19,10 @@
             <div class="menu-item">
                 <a href="#analise">Analise</a>
                 <div class="dropdown">
-                    <a href="#analise_startup_segmento">Analise de Startup por Segmento</a>
-                    <a href="#analise_startup_pais">Analise de Startup Por País</a>
+                    <a href="#analise_startup_segmento">Analise Principal de Startup por Segmento</a>
+                    <a href="#analise_complementar_startup_segmento">Analise Complementar de Startup por Segmento</a>
+                    <a href="#analise_startup_pais">Analise Principal de Startup Por País</a>
+                    <a href="#analise_complementar_startup_pais">Analise Complementar de Startup Por País</a>
                     <a href="#analise_perfil">Analise de Perfil Investidor</a>
                 </div>
             </div>
@@ -68,14 +70,14 @@
                 usuários, encontrem e publiquem conjuntos de dados, entre outras funcionalidades.
             </p>
             <p>
-                O primeiro arquivo csv utilizado em 2 das 3 analises que serão apresentadas posteriormente se trata do
+                Dois arquivo csv utilizado em 2 das 3 analises que serão apresentadas posteriormente se trata do
                 <a
                     href="https://www.kaggle.com/datasets/adilshamim8/startup-growth-and-investment-data">"startup_growth_investment_data"</a>,
                 que contem informações referente aos <strong>investimentos realizados em startups</strong> de diversos segmentos e
-                multiplos paises.
+                multiplos paises, e <a href="https://www.kaggle.com/datasets/hamnakaleemds/global-startup-success-dataset">"global_startup_sucess_dataset.csv"</a>, que contem informações referente ao <strong>nível de sucesso</strong> e <strong>informações estruturais</strong> de startups em diversos segmentos e países.
             </p>
             <p>
-                O segundo arquivo csv utilizado se trata do <a
+                O último arquivo csv utilizado se trata do <a
                     href="https://www.kaggle.com/datasets/nitindatta/finance-data?utm_source=chatgpt.com&select=Original_data.csv">"Original_data"</a>,
                 um arquivo onde um grupo de pessoas foram entrevistadas sobre os seus investimentos realizados, tal como
                 sua fonte de informações e outros detalhes.
@@ -95,7 +97,7 @@
 
         <section id="analise">
             <h2>Análise</h2>
-            <h3 id="analise_startup_segmento">Analise de Startup por Segmento</h3>
+            <h3 id="analise_startup_segmento">Analise Principal de Startup por Segmento </h3>
             <div class="galeria">
                 <img src="imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_Soma_Valorizacao.png" alt="Analise Soma Valorização">
                 <img src="imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_Total_Investimento.png" alt="Analise Total Investimento">
@@ -126,9 +128,40 @@
                 <li>O investimento relativamente baixo em Biotech, mesmo com grande potencial, é reflexo do <strong>alto risco</strong> e <strong>longo retorno</strong> do setor, o que exige investidores especializados.</li>
             </ul>
         </section>
+        <section>
+            <h3 id="analise_complementar_startup_segmento">Analise Complementar de Startup por Segmento </h3>
+            <h3>Internacional</h3>
+            <div class="galeria">
+                <img src="imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_Receita_Anual.png" alt="Alunos programando o robô">
+                <img src="imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_Media_Funcionario.png" alt="Equipe apresentando o projeto final">
+                <img src="imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_Estagio_Desenvolvimento.png" alt="Robô montado pelos alunos">
+                
+            </div>
+            <ul>
+                <h4>Soma da Receita Anual por Segmento</h4>
+
+                <li>O segmento <strong>Tech lidera a geração de receita</strong> com US$ 262 bilhões, seguido por <strong>Logistics (US$ 256B), AI (US$ 252B) e Gaming (US$ 251B)</strong></li>
+                <li>Setores tradicionais em tecnologia e inovação (como Tech e AI) continuam sendo os maiores <strong>atratores de receita</strong>, evidenciando seu papel estratégico em <strong>economias desenvolvidas</strong>.</li>
+                <li>Logística aparece como destaque com alta receita, refletindo o <strong>crescimento do e-commerce</strong> e as demandas por eficiência na cadeia de suprimentos global — especialmente após a pandemia.</li>
+                <li>A diferença entre o primeiro e o último segmento é pequena (~US$ 28B), o que indica uma <strong>distribuição relativamente equilibrada</strong> de oportunidades em setores variados, um bom indicativo para <strong>diversificação de investimentos</strong>.</li>
+
+                <h4>Média de Funcionários de Startup por Segmento</h4>
+
+                <li><strong>AI (2.593 funcionários)</strong> e <strong>Tech (2.577)</strong> lideram em número médio de empregados por startup, acima da média geral de 2.483 funcionários.</li>
+                <li>Healthcare com baixa média pode indicar startups mais especializadas, ou que operam em <strong>nichos bem definidos</strong> com estruturas enxutas.</li>
+                <li>Gaming e FoodTech também possuem médias elevadas, sugerindo a <strong>complexidade operacional</strong> e a <strong>necessidade de equipes multidisciplinares</strong> (design, engenharia, marketing).</li>
+                <li>O pequeno desvio entre os setores (cerca de 200 colaboradores) pode indicar <strong>padronização de operações</strong> em startups maduras e certa <strong>convergência</strong> nas práticas de gestão de pessoal.</li>
+
+                <h4>Quantidade de Startups por Estágio de Investimento em Cada Setor</h4>
+
+                <li><strong>Seed e Series A</strong> concentram a maior parte das startups na maioria dos segmentos — sinalizando <strong>etapas iniciais de desenvolvimento</strong> e validação de produto/mercado.</li>
+                <li><strong>Tech, Energy e Logistics</strong> são os segmentos com maior número de startups no estágio IPO, o que reflete <strong>maior maturidade do ecossistema</strong>, ideal para investidores mais <strong>conservadores</strong></li>
+                <li><strong>FinTech e Gaming</strong> possuem número expressivo de startups nos estágios Series B e C, o que aponta <strong>forte potencial de escalabilidade</strong>, opções de investimentos <strong>mais arriscadas</strong>, mas com maior potencial de retorno</li>
+            </ul>
+        </section>
 
         <section>
-            <h3 id="analise_startup_pais">Analise de Startup por Pais</h3>
+            <h3 id="analise_startup_pais">Analise Principal de Startup por Pais</h3>
             <div class="galeria">
                 <img src="imagens/Analise_Startup_Pais/Analise_Startup_Pais_Crescimento.png" alt="Analise Crescimento por Pais">
                 <img src="imagens/Analise_Startup_Pais/Analise_Startup_Pais_QTD_Investidores.png" alt="Analise Quantidade de Investidores">
@@ -159,6 +192,37 @@
                 <li>O Brasil, apesar de sua posição no meio da tabela, confirma seu <strong>papel relevante</strong> como <strong>destino de capital</strong> para startups na América Latina.</li>
             </ul>
         </section>
+
+        <section>
+            <h3 id="analise_complementar_startup_pais">Analise Complementar de Startup por Pais</h3>
+            <div class="galeria">
+                <img src="imagens/Analise_Startup_Pais/Analise_Startup_Pais_Distribuicao_Segmento.png" alt="Robô montado pelos alunos">
+                <img src="imagens/Analise_Startup_Pais/Analise_Startup_Pais_Estagio_Desenvolvimento.png" alt="Alunos programando o robô">
+                <img src="imagens/Analise_Startup_Pais/Analise_Startup_Pais_Media_Avaliacao_Sucesso.png" alt="Robô montado pelos alunos">
+            </div>
+            <ul>
+                <h4>Quantidade de Startups por Segmento em Cada País</h4>
+
+                <li>Segmentos relacionados de modo geral a <strong>tecnologia(Tech e Edtech)</strong> possuem uma <strong>forte representativiade</strong> em paises desenvolvidos e com um <strong>mercado de investimento sólido</strong>, como França e Alemanha</li>
+                <li>Os paises apresentam um foco geral no segmento de <strong>saúde(Healthcare)</strong>, presente também em mercados maduros como o da <strong>França, EUA e China</strong>.</li>
+                <li>Brasil tem uma forte presença em <strong>Energy (56)</strong> e <strong>Gaming (61)</strong>, sugerindo <strong>oportunidades</strong> e <strong>inovação</strong> nesses setores, ao contrário da tendência internacional</li>
+
+                <h4>Quantidade de Startups por Estágio de Investimento em Cada Setor</h4>
+
+                <li>Alemanha e França mostram equilíbrio, com <strong>Series C e IPO</strong>  em destaque, indicando empresas <strong>bem estruturadas</strong> e <strong>maduras</strong></li>
+                <li>Brasil e Japão se destacam em <strong>Series A</strong> e <strong>Seed</strong>, com menos startups em IPO, o que evidencia um <strong>ecossistema em crescimento</strong>, mas com <strong>baixa taxa de maturação</strong>.</li>
+                <li>EUA,Canadá e China têm números altos em <strong>Series B/C</strong>, refletindo <strong>robustez</strong> e capacidade de escalar startups, também evidenciando um <strong>estágio avançado de desenvolvimento</strong>.</li>
+                <li>Países como Alemanha, EUA e França lideram nos estágios mais avançados (IPO e Series C), mostrando <strong>maior maturidade do ecossistema</strong>. Brasil, Japão e Índia concentram-se em estágios médios (Seed/Series A), com <strong>espaço para crescimento</strong> e <strong>escalabilidade</strong>.</li>
+
+                <h4>Média de Avaliação de Sucesso por País</h4>
+
+                <li><strong>França (5.13)</strong> e <strong>EUA (5.12)</strong> lideram em avaliação de sucesso, demonstrando ambientes <strong>altamente favoráveis</strong> para startups.</li>
+                <li>Brasil (4.61) apresenta o <strong>menor índice</strong>, evidenciando desafios em alcançar performance e <strong>sucesso sustentáveis</strong>.</li>
+                <li>Alemanha (4.85) e Japão (4.91) têm avaliações <strong>abaixo da média</strong>, indicando possíveis <strong>gargalos</strong> no ambiente de negócios ou no <strong>suporte à inovação</strong>.</li>
+                <li>Startups em países com alta avaliação tendem a ter maior acesso a <strong>investimento e suporte</strong>. O Brasil precisa <strong>melhorar sua infraestrutura de inovação</strong>  e <strong>acesso a capital</strong> para elevar a taxa de sucesso. <strong>Políticas públicas</strong> e incentivo à aceleração podem ser caminhos viáveis.</li>
+            </ul>
+        </section>
+
         <section>
             <h3 id="analise_perfil">Analise de Perfil</h3>
 
