@@ -3,68 +3,87 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 def gerar_grafico_media_de_crescimento(dados):
-    #Preparação dos Dados
+    """
+    Gera uma analise da média de crescimento das startup dos paises analisados e salva o grafico de barra com o resultado
 
-    growth_by_country = dados.groupby('Country')['Growth Rate (%)'].mean().sort_values(ascending=False)
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
+    #Preparação dos Dados
+    df_media_crescimento = dados.groupby('Country')['Growth Rate (%)'].mean().sort_values(ascending=False)
 
     # Construção do gráfico
     plt.figure(figsize=(12, 8))
-    ax = sns.barplot(x=growth_by_country.values, y=growth_by_country.index, palette='Blues_r')
+    ax = sns.barplot(x=df_media_crescimento.values, y=df_media_crescimento.index, palette='Blues_r')
     plt.title('Média de Porcentagem de Crescimento por País\n(Ordenado por Desempenho)', fontsize=14, pad=20)
     plt.xlabel('Média de Crescimento (%)', fontsize=12)
     plt.ylabel('País', fontsize=12)
 
     # Adicionar valores nas barras
-    for i, value in enumerate(growth_by_country.values):
+    for i, value in enumerate(df_media_crescimento.values):
         ax.text(value + 0.5, i, f'{value:.1f}%', va='center', color='white', fontweight='bold')
 
     plt.tight_layout()
+
+    #Salvar e Exibir Gráfico
     plt.savefig('imagens/Analise_Startup_Pais/Analise_Startup_Pais_Crescimento.png')
     plt.show()
 
 def gerar_grafico_quantidade_investidores_pais(dados):
+    """
+    Gera uma analise da quantidade de investidores dos paises analisados e salva o grafico de barra com o resultado
+
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
 
     #Preparação Dados
     plt.figure(figsize=(12, 8))
-    investors_by_country = dados.groupby('Country')['Number of Investors'].sum().sort_values(ascending=False)
+    df_investidor_pais = dados.groupby('Country')['Number of Investors'].sum().sort_values(ascending=False)
 
     # Construção Gráfico
-    ax = sns.barplot(x=investors_by_country.values, y=investors_by_country.index, palette='Blues_r')
-    plt.title('Total de Investidores por País\n(Ordenado por Volume)', fontsize=14, pad=20)
+    ax = sns.barplot(x=df_investidor_pais.values, y=df_investidor_pais.index, palette='Blues_r')
+    plt.title('Total de Investidores por País', fontsize=14, pad=20)
     plt.xlabel('Número Total de Investidores', fontsize=12)
     plt.ylabel('País', fontsize=12)
 
     # Destacar o país com maior número de investidores
-    max_investors = investors_by_country.max()
-    for i, value in enumerate(investors_by_country.values):
-        color = 'gold' if value == max_investors else 'white'
+    maior_quantidade_investidores = df_investidor_pais.max()
+    for i, value in enumerate(df_investidor_pais.values):
+        color = 'gold' if value == maior_quantidade_investidores else 'white'
         ax.text(value + 5, i, f'{value:,}', va='center', color=color, fontweight='bold')
 
     plt.tight_layout()
+    
+    #Salvar e Exibir Gráfico
     plt.savefig('imagens/Analise_Startup_Pais/Analise_Startup_Pais_QTD_Investidores.png')
     plt.show()
 
 def gerar_tabela_maior_investimento_pais(dados):
     
-    #Preparação Dados
-    max_invest_by_country = dados.groupby('Country')['Investment Amount (USD)'].max().sort_values(ascending=False)
-    table_df_startup = max_invest_by_country.reset_index()
-    table_df_startup.columns = ['País', 'Maior Investimento (USD)']
-    table_df_startup['Maior Investimento (USD)'] = table_df_startup['Maior Investimento (USD)'].apply(lambda x: f"${x/1e6:.2f}M")
+    """
+    Gera uma analise do maior investimento dos paises analisados e salva a tabela com o resultado
 
-    total_valor = max_invest_by_country.sum()
-    print(f"Valor calculado para TOTAL/MÉDIA: ${total_valor:,.2f}")
-    total_row = pd.DataFrame([['TOTAL', f"${total_valor/1e6:.2f}M"]], columns=table_df_startup.columns)
-    table_df_startup = pd.concat([table_df_startup, total_row], ignore_index=True)
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
+    #Preparação Dados
+    maior_investimento_pais = dados.groupby('Country')['Investment Amount (USD)'].max().sort_values(ascending=False)
+    df_maior_investimento = maior_investimento_pais.reset_index()
+    df_maior_investimento.columns = ['País', 'Maior Investimento (USD)']
+    df_maior_investimento['Maior Investimento (USD)'] = df_maior_investimento['Maior Investimento (USD)'].apply(lambda x: f"${x/1e6:.2f}M")
+
+    total_valor = maior_investimento_pais.sum()
+    linha_total = pd.DataFrame([['TOTAL', f"${total_valor/1e6:.2f}M"]], columns=df_maior_investimento.columns)
+    df_maior_investimento = pd.concat([df_maior_investimento, linha_total], ignore_index=True)
 
     #Construção Tabela
-    fig, ax = plt.subplots(figsize=(10, len(table_df_startup)*0.6))
+    fig, ax = plt.subplots(figsize=(10, len(df_maior_investimento)*0.6))
     ax.axis('off')
 
-    cell_colors = [['#1a3a5f', '#2a4a7f']] * (len(table_df_startup)-1) + [['#8a6bd1', '#8a6bd1']]
+    cell_colors = [['#1a3a5f', '#2a4a7f']] * (len(df_maior_investimento)-1) + [['#8a6bd1', '#8a6bd1']]
     table = ax.table(
-        cellText=table_df_startup.values,
-        colLabels=table_df_startup.columns,
+        cellText=df_maior_investimento.values,
+        colLabels=df_maior_investimento.columns,
         cellLoc='center',
         loc='center',
         colColours=['#3a6ea5']*2,
@@ -77,10 +96,11 @@ def gerar_tabela_maior_investimento_pais(dados):
 
     # Destacar cabeçalho e total
     for (i, j), cell in table.get_celld().items():
-        if i == 0 or i == len(table_df_startup):
+        if i == 0 or i == len(df_maior_investimento):
             cell.set_text_props(weight='bold', color='white')
         cell.set_edgecolor('white')
 
+    #Salvar e Exibir Gráfico
     plt.title('Maiores Investimentos por País', fontsize=16, color='white', pad=30)
     plt.tight_layout()
     plt.savefig('imagens/Analise_Startup_Pais/Analise_Startup_Pais_Maior_Valor.png')
@@ -88,14 +108,20 @@ def gerar_tabela_maior_investimento_pais(dados):
 
 def gerar_grafico_surgimento_startup_anual(dados):
     
+    """
+    Gera uma analise da quantidade de startup surgidas anualmente dos paises analisados e salva o grafico de linha com o resultado
+
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
     #Preparação Dados
-    startups_by_year = dados['Year Founded'].value_counts().sort_index()
+    df_surgimento_startup_anual = dados['Year Founded'].value_counts().sort_index()
 
     #Construção Gráfico
     plt.figure(figsize=(12, 6))
     ax = sns.lineplot(
-        x=startups_by_year.index, 
-        y=startups_by_year.values, 
+        x=df_surgimento_startup_anual.index, 
+        y=df_surgimento_startup_anual.values, 
         marker='o', 
         markersize=8,
         linewidth=2.5,
@@ -108,12 +134,162 @@ def gerar_grafico_surgimento_startup_anual(dados):
     plt.ylabel('Número de Novas Startups', fontsize=12)
     plt.grid(True, alpha=0.3)
 
+    #Salvar e Exibir Gráfico
     plt.tight_layout()
     plt.savefig('imagens/Analise_Startup_Pais/Analise_Startup_Pais_Surgimento_Startup.png')
     plt.show()
 
+def gerar_grafico_distribuicao_segmento_pais(dados):
+    
+    """
+    Gera uma analise da distribuição dos segmentos de startup dos paises analisados e salva o grafico de barra com o resultado
+
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
+    #Preparação Dados
+    df_distribuicao_segmento = pd.crosstab(dados['Country'], dados['Industry'])
+    df_distribuicao_segmento = df_distribuicao_segmento.loc[df_distribuicao_segmento.sum(axis=1).sort_values(ascending=False).index]
+
+    #Criação Gráfico
+    ax = df_distribuicao_segmento.plot(kind='bar', stacked=True, figsize=(14, 7))
+
+    for bar_index, industry in enumerate(df_distribuicao_segmento.index):
+        y_offset = 0
+        for stage in df_distribuicao_segmento.columns:
+            value = df_distribuicao_segmento.loc[industry, stage]
+            if value > 0:
+                ax.text(
+                    bar_index,
+                    y_offset + value / 2,
+                    str(value),
+                    ha='center',
+                    va='center',
+                    fontsize=8,
+                )
+                y_offset += value
+
+    plt.title('Quantidade de Startups por Segmento em Cada País')
+    plt.xlabel('País')
+    plt.ylabel('Número de Startups')
+    plt.xticks(rotation=45, ha='right')
+    plt.legend(title='Estágio de Investimento', bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.tight_layout()
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+
+    # Mostrar o gráfico
+    plt.savefig('imagens/Analise_Startup_Pais/Analise_Startup_Pais_Distribuicao_Segmento.png')
+    plt.show()
+
+def gerar_tabela_media_avaliacao_sucesso_pais(dados):
+    
+    """
+    Gera uma analise da média de avaliação de sucesso das startup dos paises analisados e salva a tabela de barra com o resultado
+
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
+    #Preparação Dados
+    media_nota_sucesso = dados.groupby('Country')['Success Score'].mean().sort_values(ascending=False)
+    df_tabela_media = media_nota_sucesso.reset_index()
+    df_tabela_media.columns = ['País', 'Avaliação de Sucesso']
+
+    media_geral = pd.DataFrame([['Média Geral', media_nota_sucesso.mean()]], columns=df_tabela_media.columns)
+    df_tabela_media = pd.concat([df_tabela_media, media_geral], ignore_index=True)
+    df_tabela_media["Avaliação de Sucesso"] = df_tabela_media["Avaliação de Sucesso"].round(2)
+
+    #Construção Tabela
+    fig, ax = plt.subplots(figsize=(10, len(df_tabela_media)*0.6))
+    ax.axis('off')
+
+    cell_colors = [['#1a3a5f', '#2a4a7f']] * (len(df_tabela_media)-1) + [['#8a6bd1', '#8a6bd1']]
+    table = ax.table(
+        cellText=df_tabela_media.values,
+        colLabels=df_tabela_media.columns,
+        cellLoc='center',
+        loc='center',
+        colColours=['#3a6ea5']*2,
+        cellColours=cell_colors
+    )
+
+    table.auto_set_font_size(False)
+    table.set_fontsize(12)
+    table.scale(1.2, 1.5)
+
+    # Destacar cabeçalho e total
+    for (i, j), cell in table.get_celld().items():
+        if i == 0 or i == len(df_tabela_media):
+            cell.set_text_props(weight='bold', color='white')
+        cell.set_edgecolor('white')
+
+    plt.title('Média Nota de Sucesso', fontsize=16, color='white', pad=30)
+    plt.tight_layout()
+
+    #Salvar e Exibir a Imagem
+    plt.savefig('imagens/Analise_Startup_Pais/Analise_Startup_Pais_Media_Avaliacao_Sucesso.png')
+    plt.show()
+
+def gerar_grafico_estagio_desenvolvimento_pais(dados):
+    
+    """
+    Gera uma analise da distribuição dos estagios de desenvolvimento das startup dos paises analisados e salva o grafico de barra com o resultado
+
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
+    #Preparação Dados
+    df_estagio_desenvolvimento = pd.crosstab(dados['Country'], dados['Funding Stage'])
+    df_estagio_desenvolvimento = df_estagio_desenvolvimento.loc[df_estagio_desenvolvimento.sum(axis=1).sort_values(ascending=False).index]
+
+    #Construção Tabela
+    ax = df_estagio_desenvolvimento.plot(kind='bar', stacked=True, figsize=(14, 7))
+
+    for bar_index, industry in enumerate(df_estagio_desenvolvimento.index):
+        y_offset = 0
+        for stage in df_estagio_desenvolvimento.columns:
+            value = df_estagio_desenvolvimento.loc[industry, stage]
+            if value > 0:
+                ax.text(
+                    bar_index,
+                    y_offset + value / 2,
+                    str(value),
+                    ha='center',
+                    va='center',
+                    fontsize=8,
+                )
+                y_offset += value
+
+    plt.title('Quantidade de Startups por Estágio de Investimento em Cada Setor')
+    plt.xlabel('País')
+    plt.ylabel('Número de Startups')
+    plt.xticks(rotation=45, ha='right')
+    plt.legend(title='Estágio de Investimento', bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.tight_layout()
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+
+    # Salva E mostra Gráfico
+    plt.savefig('imagens/Analise_Startup_Pais/Analise_Startup_Pais_Estagio_Desenvolvimento.png')
+    plt.show()
+
 def gerar_analise_startup_pais(dados):
+    """
+    Gera todas as analises principais de startup por pais, exibindo e salvando seus resultados
+
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração das análises
+    """
+
     gerar_grafico_media_de_crescimento(dados)
     gerar_grafico_quantidade_investidores_pais(dados)
     gerar_tabela_maior_investimento_pais(dados)
     gerar_grafico_surgimento_startup_anual(dados)
+
+def gerar_analise_startup_pais_complementar(dados):
+    """
+    Gera todas as analises complementares de startup por pais, exibindo e salvando seus resultados
+
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração das análises
+    """
+    gerar_grafico_estagio_desenvolvimento_pais(dados)
+    gerar_grafico_distribuicao_segmento_pais(dados)
+    gerar_tabela_media_avaliacao_sucesso_pais(dados)
+
