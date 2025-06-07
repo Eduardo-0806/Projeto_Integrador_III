@@ -2,7 +2,20 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 
-def gerar_grafico_soma_valor_estimado(dados):
+def gerar_grafico_soma_valor_estimado(dados, nacional):
+    
+    """
+    Gera uma analise da soma dos valores estimados das startup dos segmentos analisados e salva o grafico de barra com o resultado
+    
+    :param nacional: Variável booleana para decidir se a analise será restrita somente ao cenário nacional
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
+    #Definindo Caminho da Imagem
+    if nacional:
+        caminho = "imagens/Analise_Startup_Segmento_Nacional/Analise_Startup_Segmento_Nacional_Soma_Valorizacao"
+    else:
+        caminho = "imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_Soma_Valorizacao"
     
     #Preparação Dados
     series_valorizacao_segmento = dados.groupby("Industry")["Valuation (USD)"].sum()
@@ -27,11 +40,26 @@ def gerar_grafico_soma_valor_estimado(dados):
         )
 
     plt.tight_layout()
-    plt.savefig("imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_Soma_Valorizacao")
+
+    #Salvar e Mostrar Imagem
+    plt.savefig(caminho)
     plt.show()
 
-def gerar_grafico_total_investimento_anual(dados):
+def gerar_grafico_total_investimento_anual(dados, nacional):
     
+    """
+    Gera uma analise da soma dos valores estimados das startup dos segmentos analisados e salva o grafico de linha com o resultado
+
+    :param nacional: Variável booleana para decidir se a analise será restrita somente ao cenário nacional
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
+    #Definindo Caminho da Imagem
+    if nacional:
+        caminho = "imagens/Analise_Startup_Segmento_Nacional/Analise_Startup_Segmento_Nacional_Total_Investimento"
+    else:
+        caminho = "imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_Total_Investimento"
+
     #Preparação Dados
     series_total_investimento = dados.groupby("Year Founded")["Investment Amount (USD)"].sum()
     series_total_investimento = (series_total_investimento / 1000000000000).round(3)
@@ -40,11 +68,26 @@ def gerar_grafico_total_investimento_anual(dados):
     plt.plot(series_total_investimento, color="cyan")
     plt.title("Total de Investimento em Startup Por Ano", fontsize=12, fontweight='bold', pad=10)
     plt.ylabel("Valor (USD)")
-    plt.savefig("imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_Total_Investimento")
+
+    #Salvar e Mostrar Imagem
+    plt.savefig(caminho)
     plt.show()
 
-def gerar_tabela_quantidade_startup_por_segmento(dados):
+def gerar_tabela_quantidade_startup_por_segmento(dados, nacional):
     
+    """
+    Gera uma analise da quantidade de startup dos segmentos analisados e salva a tabela com o resultado
+
+    :param nacional: Variável booleana para decidir se a analise será restrita somente ao cenário nacional
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
+    #Definindo Caminho da Imagem
+    if nacional:
+        caminho = "imagens/Analise_Startup_Segmento_Nacional/Analise_Startup_Segmento_Nacional_QTD"
+    else:
+        caminho = "imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_QTD"
+
     #Preparação Dados
     quantidade = dados["Industry"].value_counts()
     porcentagem = (dados["Industry"].value_counts(normalize=True) * 100).round(2)
@@ -74,16 +117,30 @@ def gerar_tabela_quantidade_startup_por_segmento(dados):
             cell.set_text_props(weight='bold', color='white')
         cell.set_edgecolor('white')
 
-    # Estilo da tabela
     table.auto_set_font_size(False)
     table.set_fontsize(10)
     table.scale(1.2, 1.2)
     plt.title("Quantidade de Startup por Segmento", fontsize=14, fontweight='bold', color='white', pad=20)
-    plt.savefig("imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_QTD")
+
+    #Salvar e Mostrar Imagem
+    plt.savefig(caminho)
     plt.show()
 
-def gerar_tabela_valor_investido_por_segmento(dados):
+def gerar_tabela_valor_investido_por_segmento(dados, nacional):
     
+    """
+    Gera uma analise do valor investido nas startup dos segmentos analisados e salva a tabela com o resultado
+
+    :param nacional: Variável booleana para decidir se a analise será restrita somente ao cenário nacional
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
+    #Definindo Caminho da Imagem
+    if nacional:
+        caminho = "imagens/Analise_Startup_Segmento_Nacional/Analise_Startup_Segmento_Nacional_Valor_Investido"
+    else:
+        caminho = "imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_Valor_Investido"
+
     #Preparação Dados
     soma_valores = dados.groupby("Industry")["Investment Amount (USD)"].sum()
     porcentagem = (soma_valores/soma_valores.sum()* 100)
@@ -120,19 +177,191 @@ def gerar_tabela_valor_investido_por_segmento(dados):
             cell.set_text_props(weight='bold', color='white')
         cell.set_edgecolor('white')
 
+    table.auto_set_font_size(False)
+    table.set_fontsize(10)
+    table.scale(1, 1.5)
+
+    plt.title("Valor Investidor por Segmento", fontsize=12, fontweight='bold', pad=10)
+    plt.tight_layout()
+
+    #Salva e Mostra imagem
+    plt.savefig(caminho)
+    plt.show()
+
+def gerar_grafico_receita_anual_por_segmento(dados, nacional):
+    
+    """
+    Gera uma analise da soma da receita anual das startup dos segmentos analisados e salva o grafico de barras com o resultado
+
+    :param nacional: Variável booleana para decidir se a analise será restrita somente ao cenário nacional
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
+    #Definindo Caminho da Imagem
+    if nacional:
+        caminho = "imagens/Analise_Startup_Segmento_Nacional/Analise_Startup_Segmento_Nacional_Receita_Anual"
+    else:
+        caminho = "imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_Receita_Anual"
+
+    #Preparação Dados
+    soma_valores = dados.groupby("Industry")["Annual Revenue ($M)"].sum()
+    soma_valores = soma_valores//1000
+    soma_valores.sort_values(ascending= True, inplace=True)
+
+    
+    #Criação tabela
+    fig, ax = plt.subplots(figsize=(6, 4))
+    rects = plt.barh(soma_valores.index, soma_valores.values)
+
+    for rect, valor in zip(rects, soma_valores.values):
+       x = rect.get_width() + 0.1  # Ajusta a posição do texto para fora da barra
+       y = rect.get_y() + rect.get_height() / 2  # Posição no meio da barra
+       plt.text(x, y, str(valor), ha='left', va='center')
+    
+    plt.title("Soma da Receita Anual por Segmento", fontsize=12, fontweight='bold', pad=10)
+    plt.xlabel("Valor(Em Bilhões US$)")
+    plt.tight_layout()
+
+    #Salvar e Mostrar Gráfico
+    plt.savefig(caminho)
+    plt.show()
+
+def gerar_grafico_estagio_desenvolvimento_segmento(dados,nacional):
+
+    """
+    Gera uma analise da distribuição dos estagios de desenvolvimento das startup dos segmentos analisados e salva o grafico de barra com o resultado
+
+    :param nacional: Variável booleana para decidir se a analise será restrita somente ao cenário nacional
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
+    #Definindo Caminho da Imagem
+    if nacional:
+        caminho = "imagens/Analise_Startup_Segmento_Nacional/Analise_Startup_Segmento_Nacional_Estagio_Desenvolvimento"
+    else:
+        caminho = "imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_Estagio_Desenvolvimento"
+
+    df_estagio_desenvolvimento = pd.crosstab(dados['Industry'], dados['Funding Stage'])
+    df_estagio_desenvolvimento = df_estagio_desenvolvimento.loc[df_estagio_desenvolvimento.sum(axis=1).sort_values(ascending=False).index]
+
+    # Criar o gráfico de barras empilhadas
+    ax = df_estagio_desenvolvimento.plot(kind='bar', stacked=True, figsize=(14, 7))
+
+    for bar_index, industria in enumerate(df_estagio_desenvolvimento.index):
+        y_offset = 0
+        for stage in df_estagio_desenvolvimento.columns:
+            value = df_estagio_desenvolvimento.loc[industria, stage]
+            if value > 0:
+                ax.text(
+                    bar_index,
+                    y_offset + value / 2,
+                    str(value),
+                    ha='center',
+                    va='center',
+                    fontsize=8
+                )
+                y_offset += value
+
+    plt.title('Quantidade de Startups por Estágio de Investimento em Cada Setor')
+    plt.xlabel('Segmento')
+    plt.ylabel('Número de Startups')
+    plt.xticks(rotation=45, ha='right')
+    plt.legend(title='Estágio de Investimento', bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.tight_layout()
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+
+    # Mostrar o gráfico
+    plt.savefig(caminho)
+    plt.show()
+
+def gerar_tabela_media_funcionarios_por_segmento(dados,nacional):
+
+    """
+    Gera uma analise da média de funcionário das startup dos segmentos analisados e salva a tabela com o resultado
+
+    :param nacional: Variável booleana para decidir se a analise será restrita somente ao cenário nacional
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
+    #Definindo Caminho da Imagem
+    if nacional:
+        caminho = "imagens/Analise_Startup_Segmento_Nacional/Analise_Startup_Segmento_Nacional_Media_Funcionario"
+    else:
+        caminho = "imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_Media_Funcionario"
+
+    media_funcionarios = dados.groupby("Industry")["Number of Employees"].mean()
+    porcentagem = (media_funcionarios/media_funcionarios.sum()* 100)
+
+    df_porcentagem_media_funcionarios = pd.DataFrame({"Segmento": media_funcionarios.index, 
+    "Média de Funcionários": media_funcionarios.values, "%": porcentagem.values})
+
+    df_porcentagem_media_funcionarios["%"] = df_porcentagem_media_funcionarios["%"].round(2)
+    df_porcentagem_media_funcionarios.sort_values(by="Média de Funcionários", ascending=False, inplace=True)
+    df_porcentagem_media_funcionarios.loc[len(df_porcentagem_media_funcionarios)] = {"Segmento": "Total", 
+                                                                        "Média de Funcionários": 
+                                                                        df_porcentagem_media_funcionarios["Média de Funcionários"].mean(),
+                                                                        "%": f"{sum(porcentagem):.0f}"}
+    df_porcentagem_media_funcionarios["Média de Funcionários"] = df_porcentagem_media_funcionarios["Média de Funcionários"].round(2)
+    #Criação tabela
+
+    fig, ax = plt.subplots(figsize=(6, 4))
+    ax.axis('off')
+    cell_colors = [['#1a3a5f', '#2a4a7f', '#4065a3']] * (len(df_porcentagem_media_funcionarios)-1) + [['#8a6bd1', '#8a6bd1', '#8a6bd1']]
+
+    table = ax.table(
+        cellText=df_porcentagem_media_funcionarios.values,
+        colLabels=df_porcentagem_media_funcionarios.columns,
+        cellLoc='center',
+        loc='center',
+        colColours=['#3a6ea5'] * 3,
+        cellColours = cell_colors
+    )
+
+    #Destacar o Cabeçalho e Total
+    for (i, j), cell in table.get_celld().items():
+        if i == 0 or i == len(df_porcentagem_media_funcionarios):
+            cell.set_text_props(weight='bold', color='white')
+        cell.set_edgecolor('white')
+
     # Estilo da tabela
     table.auto_set_font_size(False)
     table.set_fontsize(10)
     table.scale(1, 1.5)
 
     # Título
-    plt.title("Valor Investidor por Segmento", fontsize=12, fontweight='bold', pad=10)
+    plt.title("Média de Funcionários de Startup por Segmento", fontsize=12, fontweight='bold', pad=10)
     plt.tight_layout()
-    plt.savefig("imagens/Analise_Startup_Segmento/Analise_Startup_Segmento_Valor_Investido")
+    plt.savefig(caminho)
     plt.show()
+    
 
-def gerar_analise_startup_segmento(dados):
-    gerar_grafico_soma_valor_estimado(dados)
-    gerar_grafico_total_investimento_anual(dados)
-    gerar_tabela_quantidade_startup_por_segmento(dados)
-    gerar_tabela_valor_investido_por_segmento(dados)
+def gerar_analise_startup_segmento(dados, nacional):
+
+    """
+    Gera todas as analises princiapis de starturp por segmento, exibindo e salvando seus resultados
+
+    :param nacional: Variável booleana para decidir se a analise será restrita somente ao cenário nacional
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
+    if nacional:
+        dados = dados[dados["Country"] == "Brazil"]
+    gerar_grafico_soma_valor_estimado(dados, nacional)
+    gerar_grafico_total_investimento_anual(dados, nacional)
+    gerar_tabela_quantidade_startup_por_segmento(dados, nacional)
+    gerar_tabela_valor_investido_por_segmento(dados, nacional)
+
+def gerar_analise_startup_segmento_complementar(dados,nacional):
+
+    """
+    Gera todas as analises complementares de starturp por segmento, exibindo e salvando seus resultados
+
+    :param nacional: Variável booleana para decidir se a analise será restrita somente ao cenário nacional
+    :param dados: DataFrame Pandas contendo os dados a serem trabalhados para geração da análise
+    """
+
+    if nacional:
+        dados = dados[dados["Country"] == "Brazil"]
+    gerar_grafico_receita_anual_por_segmento(dados,nacional)
+    gerar_grafico_estagio_desenvolvimento_segmento(dados,nacional)
+    gerar_tabela_media_funcionarios_por_segmento(dados,nacional)
