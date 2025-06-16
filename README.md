@@ -7,7 +7,7 @@ Para visualizar a página que contém todos os resultados da análise feita, tal
 - [Página](https://eduardo-0806.github.io/Projeto_Integrador_III/)
 
 Para ver o vídeo explicativo da análise e seus resultados:
-- [Vídeo]()
+- [Vídeo](https://youtu.be/Bnu8E2rM9Eo)
 
 ## ORGANIZAÇÃO REPOSITÓRIO
 
